@@ -1,4 +1,4 @@
-package by.bsuir.lab3.server.bean.network;
+package by.bsuir.lab3.client.bean.network;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 import javax.management.BadAttributeValueExpException;
 
-import by.bsuir.lab3.server.bean.network.messages.*;
+import by.bsuir.lab3.client.bean.network.messages.*;
 
 /**
  * This class helps client and server sides to work with 

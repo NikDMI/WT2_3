@@ -1,4 +1,4 @@
-package by.bsuir.lab3.server.bean.network.messages;
+package by.bsuir.lab3.client.bean.network.messages;
 
 import java.io.WriteAbortedException;
 import java.nio.charset.Charset;
