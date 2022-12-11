@@ -24,6 +24,8 @@ public class StartPoint {
 				@Override
 				public void run() {
 					try {
+						System.out.println("Server is starts work...");
+						System.out.println("Press any key to stop the server");
 						SocketAddress serverAddress = new InetSocketAddress(SERVER_DOMAIN, SERVER_PORT);
 						serverModel.startServer(serverAddress);
 					} catch (Exception e) {
@@ -34,6 +36,7 @@ public class StartPoint {
 			serverThread.run();
 			System.in.read();
 			serverModel.stopServer();
+			System.out.println("Server was stopped succesfully");
 		} catch(Exception e) {
 			
 		}
