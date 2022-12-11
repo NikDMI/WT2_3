@@ -3,6 +3,9 @@ package by.bsuir.lab3.server.entry;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
+import by.bsuir.lab3.server.bean.structures.UserInfo;
+import by.bsuir.lab3.server.dao.impl.UsersDaoXml;
+import by.bsuir.lab3.server.dao.interf.UsersDao;
 import by.bsuir.lab3.server.services.*;
 import by.bsuir.lab3.server.services.ServiceFactory.ServerType;
 import by.bsuir.lab3.server.services.exception.ServiceException;
@@ -16,6 +19,13 @@ import by.bsuir.lab3.server.services.interf.ServerModel;
 public class StartPoint {
 	
 	public static void main(String[] args) {
+		try {
+			UsersDaoXml daoXml = new UsersDaoXml("D:\\БГУИР 3 КУРС\\ВТ\\LabWorks\\LW_3\\DB");
+			daoXml.addNewUser("1", "123", new UserInfo());
+		} catch (Exception e) {
+			
+		}
+		
 		try {
 			final ServerModel serverModel = ServiceFactory.getServerModel(ServerType.TCP);
 			
@@ -40,6 +50,7 @@ public class StartPoint {
 		} catch(Exception e) {
 			
 		}
+		
 		
 	}
 	
