@@ -5,10 +5,6 @@ import by.bsuir.lab3.server.controller.exception.ControllerException;
 import by.bsuir.lab3.server.dao.exception.DaoException;
 
 public interface UsersDao {
-
-	
-	public UserInfo.UserRole getUserRole(String userLogin, String userPassword) throws DaoException;
-	
 	
 	public void addNewUser(String userLogin, String userPassword, UserInfo userInfo) throws DaoException;
 	

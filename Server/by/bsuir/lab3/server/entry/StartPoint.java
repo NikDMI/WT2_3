@@ -19,12 +19,6 @@ import by.bsuir.lab3.server.services.interf.ServerModel;
 public class StartPoint {
 	
 	public static void main(String[] args) {
-		try {
-			UsersDaoXml daoXml = new UsersDaoXml("D:\\БГУИР 3 КУРС\\ВТ\\LabWorks\\LW_3\\DB");
-			daoXml.addNewUser("1", "123", new UserInfo());
-		} catch (Exception e) {
-			
-		}
 		
 		try {
 			final ServerModel serverModel = ServiceFactory.getServerModel(ServerType.TCP);

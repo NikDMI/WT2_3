@@ -52,29 +52,9 @@ public class UsersDaoXml implements UsersDao{
 	}
 	
 	
-	public UserInfo.UserRole getUserRole(String userLogin, String userPassword) throws DaoException{
-		try {
-			XMLStreamReader xmlStreamReader = XMLInputFactory.newDefaultFactory().createXMLStreamReader
-					(Files.newInputStream(authorizationFile.toPath(), StandardOpenOption.READ));
-			while (xmlStreamReader.hasNext()) {
-				xmlStreamReader.nextTag();
-				//Get tags with user auth info
-				if(xmlStreamReader.getName().getLocalPart() == USER_AUTH_INFO_TAG) {
-					xmlStreamReader.nextTag();
-					String login = xmlStreamReader.getElementText();
-					xmlStreamReader.nextTag();
-					String password = xmlStreamReader.getElementText();
-				}
-			}
-		} catch (Exception e) {
-			throw new DaoException("Can't read file", e);
-		}
-		 return UserInfo.UserRole.NONE;
-	}
-	
-	
 	public void addNewUser(String userLogin, String userPassword, UserInfo userInfo) throws DaoException{
 		try {
+			 lockObject.lock();
 			 //load xml
 			 Document document = null;
 			 Element rootElement = null;
@@ -104,7 +84,11 @@ public class UsersDaoXml implements UsersDao{
 	        		 StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE, StandardOpenOption.CREATE));
 	         transformer.transform(source, result);
 		} catch (Exception e) {
+			
 			throw new DaoException("Can't read file", e);
+		}
+		finally {
+			lockObject.unlock();
 		}
 	}
 	
@@ -156,6 +140,7 @@ public class UsersDaoXml implements UsersDao{
 			 for (int i = 0; i < usersInfo.getLength(); ++i) {
 				 Node userNode = usersInfo.item(i);
 				 Node userLoginNode = userNode.getFirstChild();
+				 
 				 if (userLoginNode.getTextContent().equals(userLogin)) {
 					 UserInfo userInfo = new UserInfo();
 					 Node userInfoNode = userNode.getLastChild();
@@ -164,6 +149,8 @@ public class UsersDaoXml implements UsersDao{
 					 userInfo.userGroup = userInfoListNodes.item(1).getTextContent();
 					 userInfo.userAge = Integer.parseInt(userInfoListNodes.item(2).getTextContent());
 					 userInfo.userRole = UserRole.valueOf(userInfoListNodes.item(3).getTextContent());
+					 Node userPasswordNode = userNode.getFirstChild().getNextSibling();
+					 userInfo.userPassword = userPasswordNode.getTextContent();
 					 return userInfo;
 				 }
 			 }

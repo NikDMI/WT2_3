@@ -6,6 +6,9 @@ import java.net.*;
 import java.util.concurrent.*;
 
 import by.bsuir.lab3.server.services.interf.*;
+import by.bsuir.lab3.server.dao.DaoFactory;
+import by.bsuir.lab3.server.dao.DaoFactory.StorageType;
+import by.bsuir.lab3.server.dao.interf.UsersDao;
 import by.bsuir.lab3.server.services.exception.*;
 
 public class ServerTcp implements ServerModel {
@@ -27,10 +30,11 @@ public class ServerTcp implements ServerModel {
 	public void startServer(SocketAddress bindingAddress) throws ServiceException {
 		try {
 			serverSocket.bind(bindingAddress);
+			UsersDao usersDao = DaoFactory.getDao(StorageType.XML);
 			while(true) {
 				//Accept client connections
 				Socket clientSocket = serverSocket.accept();
-				threadPool.execute(new TcpClientCallback(clientSocket));
+				threadPool.execute(new TcpClientCallback(clientSocket, usersDao));
 			}
 		} catch (Exception e) {
 			throw new ServiceException("Can't start server", e);

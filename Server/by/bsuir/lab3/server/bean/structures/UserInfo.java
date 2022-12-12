@@ -9,6 +9,8 @@ public class UserInfo {
 	public String userGroup = "none";
 	public Integer userAge = 0;
 	
+	public String userPassword;
+	
 }
 
 

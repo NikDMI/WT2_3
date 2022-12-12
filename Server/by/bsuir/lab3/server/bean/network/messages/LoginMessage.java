@@ -30,6 +30,6 @@ public class LoginMessage extends BasicMessage {
 	}
 	
 	
-	private String userLogin;
-	private String userPassword;
+	public String userLogin;
+	public String userPassword;
 }
